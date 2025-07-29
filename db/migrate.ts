@@ -1,19 +1,29 @@
 import { config } from "dotenv";
-import { drizzle } from "drizzle-orm/postgres-js";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import postgres from "postgres";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { Client } from "pg";
 
 config({
   path: ".env.local",
 });
 
 const runMigrate = async () => {
-  if (!process.env.POSTGRES_URL) {
+  const connectionString = process.env.POSTGRES_URL;
+
+  if (!connectionString) {
     throw new Error("POSTGRES_URL is not defined");
   }
 
-  const connection = postgres(process.env.POSTGRES_URL, { max: 1 });
-  const db = drizzle(connection);
+  const client = new Client({
+    connectionString,
+    ssl: {
+      rejectUnauthorized: false, // Supabase SSL requirement
+    },
+  });
+
+  await client.connect();
+
+  const db = drizzle(client);
 
   console.log("⏳ Running migrations...");
 
@@ -22,7 +32,8 @@ const runMigrate = async () => {
   const end = Date.now();
 
   console.log("✅ Migrations completed in", end - start, "ms");
-  process.exit(0);
+
+  await client.end();
 };
 
 runMigrate().catch((err) => {
