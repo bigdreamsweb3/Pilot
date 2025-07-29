@@ -30,7 +30,7 @@ export default function Page() {
     if (state.status === 'user_exists') {
       toast.error('Account already exists');
     } else if (state.status === 'failed') {
-      toast.error(state.error || 'Failed to create account');
+      toast.error(state.error || 'Failed to create account o');
     } else if (state.status === 'invalid_data') {
       toast.error('Failed validating your submission!');
     } else if (state.status === 'success') {
