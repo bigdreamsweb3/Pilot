@@ -76,9 +76,14 @@ export const register = async (
       return { status: "success" };
     }
   } catch (error) {
+  const errorMessage =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : JSON.stringify(error);
 
-    alert(error.message || JSON.stringify(error));
-    
+  alert(errorMessage);
     if (error instanceof z.ZodError) {
       return { status: "invalid_data" };
     }
