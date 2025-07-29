@@ -43,17 +43,19 @@ export async function getUser(email: string): Promise<Array<User>> {
 }
 
 export async function createUser(email: string, password: string) {
-  let salt = genSaltSync(10);
-  let hash = hashSync(password, salt);
+  const salt = genSaltSync(10);
+  const hash = hashSync(password, salt);
 
   try {
     return await db.insert(user).values({ email, password: hash });
   } catch (error: any) {
     console.error('Failed to create user in database', error);
-    alert(error.message || JSON.stringify(error));
-    throw error; // rethrow so caller can handle it further if needed
+
+    // Just rethrow or return a custom error object
+    throw new Error(error?.message || 'Unknown error while creating user');
   }
 }
+
 
 
 export async function saveChat({
