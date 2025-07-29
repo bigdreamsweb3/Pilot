@@ -20,7 +20,16 @@ import {
 // Optionally, if not using email/pass login, you can
 // use the Drizzle adapter for Auth.js / NextAuth
 // https://authjs.dev/reference/adapter/drizzle
-let client = postgres(`${process.env.POSTGRES_URL!}`);
+// let client = postgres(`${process.env.POSTGRES_URL!}`);
+
+const client = postgres({
+  host: "ep-dawn-grass-aeq2xt72-pooler.c-2.us-east-2.aws.neon.tech",
+  user: "neondb_owner",
+  password: "npg_5GYgfCOWQl6m",
+  database: "neondb",
+  ssl: "require", // enable SSL as required by Neon
+});
+
 let db = drizzle(client);
 
 export async function getUser(email: string): Promise<Array<User>> {
