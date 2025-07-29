@@ -76,18 +76,17 @@ export const register = async (
       return { status: "success" };
     }
   } catch (error) {
-  const errorMessage =
-    error instanceof Error
-      ? error.message
-      : typeof error === "string"
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : typeof error === "string"
         ? error
         : JSON.stringify(error);
 
-  alert(errorMessage);
     if (error instanceof z.ZodError) {
-      return { status: "invalid_data" };
+      return { status: "invalid_data", error: errorMessage };
     }
 
-    return { status: "failed" };
+    return { status: "failed", error: errorMessage };
   }
 };
