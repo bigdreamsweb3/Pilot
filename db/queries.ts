@@ -48,11 +48,13 @@ export async function createUser(email: string, password: string) {
 
   try {
     return await db.insert(user).values({ email, password: hash });
-  } catch (error) {
-    console.error('Failed to create user in database');
-    throw error;
+  } catch (error: any) {
+    console.error('Failed to create user in database', error);
+    alert(error.message || JSON.stringify(error));
+    throw error; // rethrow so caller can handle it further if needed
   }
 }
+
 
 export async function saveChat({
   id,
