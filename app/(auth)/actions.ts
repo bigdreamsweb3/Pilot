@@ -65,7 +65,7 @@ export const register = async (
     let [user] = await getUser(validatedData.email);
 
     if (user) {
-      return { status: "user_exists" } as RegisterActionState;
+      return { status: "user_exists" };
     } else {
       await createUser(validatedData.email, validatedData.password);
       await signIn("credentials", {
@@ -77,7 +77,8 @@ export const register = async (
       return { status: "success" };
     }
   } catch (error) {
-    const errorMessage = error;
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred.";
 
     if (error instanceof z.ZodError) {
       return { status: "invalid_data", error: errorMessage };
