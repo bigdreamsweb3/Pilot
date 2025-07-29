@@ -16,9 +16,10 @@ export default function Page() {
   const [email, setEmail] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
 
-  const [state, formAction] = useActionState<RegisterActionState, FormData>(
-    register,
-    {
+  const [state, formAction] = useActionState<
+  RegisterActionState & { error?: string },
+  FormData
+>(register, {
       status: 'idle',
     }
   );
@@ -27,7 +28,7 @@ export default function Page() {
     if (state.status === 'user_exists') {
       toast.error('Account already exists');
     } else if (state.status === 'failed') {
-      toast.error('Failed to create account');
+      toast.error(state.error || 'Failed to create account');
     } else if (state.status === 'invalid_data') {
       toast.error('Failed validating your submission!');
     } else if (state.status === 'success') {
