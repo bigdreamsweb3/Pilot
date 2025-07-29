@@ -49,6 +49,7 @@ export interface RegisterActionState {
     | "failed"
     | "user_exists"
     | "invalid_data";
+  error?: string;
 }
 
 export const register = async (
