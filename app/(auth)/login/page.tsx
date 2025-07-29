@@ -24,14 +24,23 @@ export default function Page() {
   );
 
   useEffect(() => {
-    if (state.status === 'failed') {
+    if (!state?.status) return;
+  
+  switch (state.status) {
+    case 'failed':
       toast.error('Invalid credentials!');
-    } else if (state.status === 'invalid_data') {
-      toast.error('Failed validating your submission!');
-    } else if (state.status === 'success') {
+      break;
+    case 'invalid_data':
+      toast.error('Please fill in all required fields!');
+      break;
+    case 'success':
       setIsSuccessful(true);
+      toast.success('Logged in!');
       router.refresh();
-    }
+      break;
+    default:
+      toast.error('Unknown login state. Try again.');
+  }
   }, [state.status, router]);
 
   const handleSubmit = (formData: FormData) => {
