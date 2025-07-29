@@ -6,7 +6,10 @@
     "dev": "next dev --turbo",
     "build": "tsx db/migrate && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "// Git Commands": "--------------------Git Commands-------------------",
+        "git-commit-push": "git diff-index --quiet HEAD || (git add . && git commit -m \"Something just got updated!\" --allow-empty && git push origin main)",
+            "git-commit-push-force": "git add . && git commit -m \"Something just got updated!\" --no-verify --allow-empty && git push origin main --force"
   },
   "dependencies": {
     "@ai-sdk/openai": "1.0.0-canary.3",
@@ -36,7 +39,6 @@
     "diff-match-patch": "^1.0.5",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.34.0",
-    "pg": "^8.11.3",
     "framer-motion": "^11.3.19",
     "geist": "^1.3.1",
     "lucide-react": "^0.446.0",
@@ -44,6 +46,7 @@
     "next-auth": "5.0.0-beta.25",
     "next-themes": "^0.3.0",
     "orderedmap": "^2.1.1",
+    "pg": "^8.16.3",
     "postgres": "^3.4.4",
     "prosemirror-example-setup": "^1.2.3",
     "prosemirror-inputrules": "^1.4.0",
