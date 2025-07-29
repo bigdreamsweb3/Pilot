@@ -27,10 +27,11 @@ const client = postgres({
   user: "neondb_owner",
   password: "npg_5GYgfCOWQl6m",
   database: "neondb",
-  ssl: "require", // enable SSL as required by Neon
+  ssl: "require", // correct string value for neon
 });
 
-let db = drizzle(client);
+const db = drizzle(client); // use const here
+
 
 export async function getUser(email: string): Promise<Array<User>> {
   try {
